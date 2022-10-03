@@ -1,0 +1,93 @@
+{{#unless adding}}
+{{#if showControls}}
+<div class="vac-controls vac-control">
+    <button class="vac-button">+ NEW</button>
+    {{#if showNav}}
+    <div class="vac-annotation-nav">
+        <div class="vac-a-prev">Prev</div>
+        <div class="vac-a-next">Next</div>
+    </div>
+    {{/if}}
+</div>
+{{/if}}
+{{/unless}}
+
+{{#if adding}}
+<div class="vac-video-cover vac-control">
+    <div class="vac-video-cover-canvas">
+        <div class="vac-cursor-tool-tip vac-hidden">Click and drag to select</div>
+    </div>
+</div>
+
+{{#if showControls}}
+<div class="vac-add-controls vac-control">
+    <i>Select shape + range</i>
+    {{#if internalCommenting}}
+    <button class="vac-button">CONTINUE</button>
+    <a>cancel</a>
+    {{/if}}
+    <div class="vac-video-move">
+        <div class="vac-a-prev">-1 sec</div>
+        <div class="vac-a-next">+1 sec</div>
+    </div>
+</div>
+{{/if}}
+
+{{#if writingComment}}
+<div class="vac-video-write-new-wrap vac-control">
+    <div class="vac-video-write-new vac-is-annotation">
+        <div>
+            <h5><b>New Annotation</b> @ {{rangeStr}}</h5>
+            {{!-- <form name="myform">
+                <label for="mylist"><h5><b>Templates:<b></h5><label>
+                <select name="mylist" onChange="nav()">
+                    <option value="emboli">Emboli</option>
+                    <option value="bubble">Bubble</option>
+                </select>
+            </form> --}}
+            <br></br>
+            <button class="vac-template-button">Emboli template</button>
+
+            <div class="vac-comment-showbox">
+                <textarea placeholder="Enter comment...">{{templateContent}}</textarea>
+                <div>
+                    <button class='vac-button vac-save-button'>SAVE</button>
+                    <a class="vac-cancel-add-new">Cancel</a>
+                </div>
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>
+{{/if}}
+
+
+{{#if showTemplates}}
+<div class="vac-video-write-new-wrap vac-control">
+    <div class="vac-video-write-new vac-is-annotation">
+        <div>
+            <h5><b>New Annotation</b> @ {{rangeStr}}</h5>
+            <div class="vac-comment-showbox">
+                <br><br>
+                <label style="color:black">Emboli Count (Right):  </label>
+                <input type="text" placeholder="Enter Value"></input>
+                <br><br>
+                <label style="color:black">Emboli Count (Left):  </label>
+                <input type="text" placeholder="Enter Value"></input>
+                <br><br>
+                <label style="color:black">Emboli Count (Bilateral):  </label>
+                <input type="text" placeholder="Enter Value"></input>3
+                <br><br>
+                
+                <div>
+                    <button class="vac-template-save">SAVE</button>
+                    <a class="vac-cancel-template">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}
+{{/if}}
