@@ -10,7 +10,7 @@
 6. "shape" is referring to the orange square when users toggle cursur to draw a highlight; "Marker" is referring to the highlighted tick on the video timeline when annotation is made.
 7. To understand the program workflow, please look into `src/js/components/controls.js`. There's a `bindEvents` function which select elements using css selector and bind it with different events. 
 
-## Develop and Build
+## Develop and Build:
 
 - cd into `videojs-annotation-comments`
 - Use node 10.13.0 or 10.15.2 by `nvm use 10.13.0`
@@ -20,7 +20,7 @@
 - Website is hosted at `http://localhost:3004/test.html`
 
 
-## Customize templates
+## Customize comment templates:
 
 1. html codes can be added in `controls.hbs`
 2. In `js/components/controls.js`, add corresponding Javascript codes to control when to show temmplates. 
