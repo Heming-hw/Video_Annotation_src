@@ -1,0 +1,302 @@
+<!DOCTYPE HTML>
+<HTML>
+	<HEAD>
+		<title>VideoJS Annotated Comments Test Page</title>
+		<link href="/video.js/dist/video-js.css" rel="stylesheet">
+		<link href="assets/videojs_skin.css" rel="stylesheet">
+		<link href="assets/page.css" rel="stylesheet">
+		<link href="css/annotations.css" rel="stylesheet">
+		<script>
+			function guid() {
+		      function s4() {
+		        return Math.floor((1 + Math.random()) * 0x10000)
+		          .toString(16)
+		          .substring(1);
+		      }
+		      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+		        s4() + '-' + s4() + s4() + s4();
+		    }
+			var annotations = [
+				{
+					"id": 1,
+					"range": {
+						"start": 55, "end": null
+					},
+					"shape": {
+						"x1":23.47,"y1":9.88,"x2":60.83,"y2":44.2
+					},
+					"comments":[
+						{
+							"id": guid(),
+							"meta":{
+								"datetime": "2017-03-28T19:17:32.238Z",
+								"user_id":1,
+								"user_name": "Jack Pope"
+							},
+							"body": "Is the \"Stories API\" the only API we want to highlight here? It makes the system feel a little limited, even though we have robust functionality and multiple APIs"
+						}
+					]
+				},
+				{
+                    "id": 2,
+					"range": {
+						"start":0,"stop":65
+					},
+					"shape": {
+						"x1":0.97,"y1":65.19,"x2":36.25,"y2":97.28
+					},
+					"comments": [
+						{
+							"id": guid(),
+							"meta": {
+								"datetime":"2017-03-28T19:18:25.485Z",
+								"user_id":2,
+								"user_name": "Evan Carothers"
+							},
+						"body": "Can we replace this logo with Microsoft?"
+						},
+						{
+							id: guid(),
+							meta: {
+								"datetime":"2017-03-29T00:18:25.485Z",
+								user_id: 1,
+								user_name: "Jack Pope"
+							},
+							body: "Great idea Evan, that's a SUPER recognizable brand!\n\nAny other major company brands we are missing in this shot?"
+						}
+					]
+				},
+				{
+                    "id": 3,
+					"range": {
+						"start":100,"end":130
+					},
+					"shape": null,
+					"comments": [
+						{
+							"id": guid(),
+							"meta": {
+								"datetime": "2017-03-28T19:21:41.351Z",
+								"user_id":1,
+								"user_name": "Jack Pope"
+							},
+							"body": "Can we have a music change for this final section that transitions towards the final frame? Some sweet heavy rock 80s ballad?"
+						}
+					]
+				},
+				{
+                   	"id": 4,
+					"range": {
+						"start":21,"end":61
+					},
+					"shape": null,
+					"comments": [
+						{
+							"id": guid(),
+							"meta": {
+								"datetime": "2017-03-28T19:21:41.351Z",
+								"user_id": 2,
+								"user_name": "Evan Carothers"
+							},
+							"body": "The music is a little loud through this section and distracts from the content and narration a bit - can we tone 'er down a couple nocks here?"
+						}
+					]
+				},
+				{
+                   	"id": 5,
+					"range": {
+						"start":21,"end":null
+					},
+					"shape": null,
+					"comments": [
+						{
+							"id": guid(),
+							"meta": {
+								"datetime": "2017-03-28T19:21:41.351Z",
+								"user_id": 2,
+								"user_name": "Evan Carothers"
+							},
+							"body": "Testing moment vs ranged comment at same start time - activation bug"
+						}
+					]
+				}
+			];
+		</script>
+
+	</HEAD>
+	<BODY>
+		<video id="the_video" class="video-js" controls preload="auto" width="720" height="405" poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+		    <source src="contently-platform-overview.mp4" type='video/mp4'>
+		    <p class="vjs-no-js">
+		     	To view this video please enable JavaScript, and consider upgrading to a web browser that
+		     	<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+		    </p>
+		</video>
+
+        <div id="test-control-panel">
+            <div class="control-section">
+                <p class="event-type"><strong>SEND:</strong> Open Annotation Event</p>
+                <label>Annotation ID</label>
+                <input id="annotation-id-input"></input>
+                <button id="fire-open-annotation">FIRE</button>
+            </div>
+
+			<div class="control-section">
+				<p class="event-type"><strong>SEND:</strong> Close Active Annotation Event</p>
+				<button id="fire-close-active-annotation">FIRE</button>
+			</div>
+
+			<div class="control-section">
+				<p class="event-type"><strong>RECEIVE:</strong> Annotation Opened Event</p>
+				<p>Id opened: <span id="annotation-opened-id"></span></p>
+			</div>
+
+			<div class="control-section">
+				<p class="event-type"><strong>SEND:</strong> Adding Annotation Event</p>
+				<button id="fire-adding-annotation">FIRE</button>
+			</div>
+
+			<div class="control-section">
+				<p class="event-type"><strong>SEND:</strong> Cancel Adding Annotation Event</p>
+				<button id="fire-cancel-adding-annotation">FIRE</button>
+			</div>
+
+			<div class="control-section">
+				<p class="event-type"><strong>SEND:</strong> Toggle Annotation Mode</p>
+				<button id="fire-toggle-annotation-mode">FIRE</button>
+			</div>
+
+			<div class="control-section hidden" id="new-annotation-form">
+				<p class="event-type"><strong>SEND:</strong> New Annotation Event</p>
+				<label>Comment body</label>
+				<textarea id="new-annotation-comment-body"></textarea>
+				<input type="hidden" id="new-annotation-range-start"></input>
+				<input type="hidden" id="new-annotation-range-end"></input>
+				<input type="hidden" id="new-annotation-shape-x1"></input>
+				<input type="hidden" id="new-annotation-shape-x2"></input>
+				<input type="hidden" id="new-annotation-shape-y1"></input>
+				<input type="hidden" id="new-annotation-shape-y2"></input>
+				<button id="fire-new-annotation">Save</button>
+			</div>
+
+			<div class="control-section" id="new-comment-form">
+				<p class="event-type"><strong>SEND:</strong> New Comment Event</p>
+				<label>Annotation ID</label>
+				<input id="new-comment-annotation-id"></input>
+				<label>Comment Body</label>
+				<textarea id="new-comment-body"></textarea>
+				<button id="fire-new-comment">Save</button>
+			</div>
+
+			<div class="control-section" id="destroy-comment-form">
+				<p class="event-type"><strong>SEND:</strong> Destroy Comment Event</p>
+				<label>Comment ID</label>
+				<input id="destroy-comment-id"></input>
+				<button id="fire-destroy-comment">FIRE</button>
+			</div>
+        </div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="/video.js/dist/video.min.js"></script>
+		<script src="/videojs-annotation-comments.js"></script>
+		<script>
+			window.VAC_DEBUG = true;
+			var player = videojs('the_video');
+			window.plugin = player.annotationComments({
+				annotationsObjects: annotations,
+				bindArrowKeys: true,
+				meta: {
+					user_id: 2,
+					user_name: "Evan Carothers"
+				},
+				onStateChanged: function(data){ console.log(data); },
+				internalCommenting: false,
+				showControls: false,
+				showMarkerTooltips: false,
+				startInAnnotationMode: true
+			});
+
+			$("#fire-open-annotation").on("click", function() {
+                var id = $("#annotation-id-input").val();
+                plugin.fire("openAnnotation", {id: id});
+            });
+
+			$("#fire-close-active-annotation").on("click", function() {
+				plugin.fire("closeActiveAnnotation", {});
+			});
+
+			$("#fire-adding-annotation").on("click", function() {
+				plugin.fire("addingAnnotation");
+			});
+
+			$("#fire-cancel-adding-annotation").on("click", function() {
+				plugin.fire("cancelAddingAnnotation");
+				$("#new-annotation-form").addClass("hidden");
+			});
+
+			$("#fire-toggle-annotation-mode").on("click", function(){
+				plugin.fire("toggleAnnotationMode");
+			});
+
+			$("#fire-new-annotation").on("click", function() {
+				var annotation = {
+					id: 999,
+					range: {
+						start: $("#new-annotation-range-start").val(),
+						end: $("#new-annotation-range-end").val()
+					},
+					shape: {
+						x1: $("#new-annotation-shape-x1").val(),
+						x2: $("#new-annotation-shape-x2").val(),
+						y1: $("#new-annotation-shape-y1").val(),
+						y2: $("#new-annotation-shape-y2").val(),
+					},
+					commentStr: $("#new-annotation-comment-body").val()
+				};
+				plugin.fire("newAnnotation", annotation);
+			});
+
+			$("#fire-new-comment").on("click", function() {
+				var data = {
+					annotationId: $("#new-comment-annotation-id").val(),
+					body: $("#new-comment-body").val()
+				}
+
+				plugin.fire("newComment", data);
+			});
+
+			$("#fire-destroy-comment").on("click", function() {
+				var id = $("#destroy-comment-id").val();
+				plugin.fire("destroyComment", {id: id});
+			});
+
+			plugin.registerListener("annotationOpened", function(event) {
+				var id = event.detail.annotation.id;
+				$("#annotation-opened-id").html(id);
+			});
+
+			plugin.registerListener("addingAnnotationDataChanged", function(event) {
+				console.log(event.detail);
+			});
+
+			plugin.registerListener("enteredAddingAnnotation", function(event) {
+				var range = event.detail.range;
+				console.log("Starting add annotation process");
+				$("#new-annotation-form").removeClass("hidden");
+				$("#new-annotation-range-start").val(range.start);
+			});
+
+			plugin.registerListener("addingAnnotationDataChanged", function(event) {
+				if(event.detail.shape) {
+					$("#new-annotation-shape-x1").val(event.detail.shape.x1);
+					$("#new-annotation-shape-x2").val(event.detail.shape.x2);
+					$("#new-annotation-shape-y1").val(event.detail.shape.y1);
+					$("#new-annotation-shape-y2").val(event.detail.shape.y2);
+				} else {
+					$("#new-annotation-range-start").val(event.detail.range.start);
+					$("#new-annotation-range-end").val(event.detail.range.end);
+				}
+			});
+		</script>
+	</BODY>
+</HTML>
